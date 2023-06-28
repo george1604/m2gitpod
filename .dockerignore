@@ -1,0 +1,10 @@
+.git
+.idea
+mysql
+node_modules
+pub/media
+var
+!var/view_preprocessed
+automation/.vagrant
+automation/data
+sql

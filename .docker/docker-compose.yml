@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  php:
+    build:
+      context: ../
+      dockerfile: .docker/.gitpod.Dockerfile
+    working_dir: '/workspace'
+    command: tail -f /dev/null #sudo /etc/init.d/supervisor start
+    volumes:
+      - ../:/workspace
+    networks:
+      - proxy
+    environment:
+      - "GITPOD_REPO_ROOT=${GITPOD_REPO_ROOT}"
+    ports:
+      - ${MYSQL_PORT}:3306
+    labels:
+      - traefik.enable=true
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=web'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}-secure.rule=Host(`$HOST`)'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}-secure.entrypoints=websecure'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`$HOST`)'
+      - 'traefik.http.routers.${COMPOSE_PROJECT_NAME}-secure.tls=true'
+      - 'traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=8002'
+networks:
+  proxy:
+    external: true
