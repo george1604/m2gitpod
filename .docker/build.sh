@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+# Create database
+mysql -u gitpod -p -e 'CREATE DATABASE IF NOT EXISTS magento2;'
+mysql -u gitpod -e 'ALTER USER 'gitpod'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'zitec123';'
 
 
 # Get URL
