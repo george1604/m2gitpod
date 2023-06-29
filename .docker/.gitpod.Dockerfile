@@ -38,7 +38,7 @@ RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcac
 # Copy config files for php-fpm & nginx
 COPY .docker/config/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 COPY .docker/config/sp-php-fpm.conf /etc/supervisor/conf.d/sp-php-fpm.conf
-COPY .docker/config/nginx.conf /etc/nginx
+COPY .docker/config/nginx.conf.template /etc/nginx
 
 
 # Install MySQL
