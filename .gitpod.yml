@@ -8,9 +8,9 @@ vscode:
     - TabNine.tabnine-vscode@3.4.14
     - felixfbecker.php-debug@1.16.0
 tasks:
-  - init: ./.docker/init.sh
   - name: "Run services and install Magento"
     openMode: tab-after
+    init: ./.docker/init.sh
     command: service nginx start &
              sudo sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf &&
              sudo /etc/init.d/supervisor start & \

@@ -1,7 +1,7 @@
 FROM gitpod/workspace-base:2023-05-09-03-02-39
 
 USER root
-ENV TRIGGER_REBUILD=1
+ENV TRIGGER_REBUILD=2
 
 # Install supervisor
 RUN apt-get update && apt-get install -y supervisor && mkdir -p /var/log/supervisor
