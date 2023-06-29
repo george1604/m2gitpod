@@ -6,7 +6,8 @@ if [ -f $GITPOD_REPO_ROOT/db-installed.flag ]; then
 fi
 
 # Create database
-sudo mysql -uroot -e 'SET variable "innodb_file_per_table"=ON; CREATE DATABASE IF NOT EXISTS magento2;'
+sudo mysql -uroot -e 'SET GLOBAL innodb_file_per_table=ON;'
+sudo mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS magento2;'
 sudo mysql -uroot -e 'ALTER USER "root"@"localhost" IDENTIFIED WITH caching_sha2_password BY "zitec123";'
 
 # Import dump
