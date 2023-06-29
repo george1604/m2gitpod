@@ -57,7 +57,9 @@ COPY .docker/config/client.cnf /etc/mysql/conf.d/client.cnf
 
 # Install Elasticsearch
 RUN curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.4.0-linux-x86_64.tar.gz --output elasticsearch-8.4.0-linux-x86_64.tar.gz \
-    && tar -xzf elasticsearch-8.4.0-linux-x86_64.tar.gz
+    && tar -xzf elasticsearch-8.4.0-linux-x86_64.tar.gz \
+    && sed -i -e '$a-Xms512m' elasticsearch-8.4.0/config/jvm.options \
+    && sed -i -e '$a-Xmx512m' elasticsearch-8.4.0/config/jvm.options
 
 # Copy Elasticsearch config
 COPY .docker/config/sp-elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf

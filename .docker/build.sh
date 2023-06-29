@@ -6,8 +6,8 @@ if [ -f $GITPOD_REPO_ROOT/db-installed.flag ]; then
 fi
 
 # Create database
-sudo mysql -u gitpod -p -e 'CREATE DATABASE IF NOT EXISTS magento2;'
-sudo mysql -u root -e 'ALTER USER "root"@"localhost" IDENTIFIED WITH caching_sha2_password BY "zitec123";'
+sudo mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS magento2;'
+sudo mysql -uroot -e 'ALTER USER "root"@"localhost" IDENTIFIED WITH caching_sha2_password BY "zitec123";'
 
 # Import dump
 tar -xvzf database.tar.gz
