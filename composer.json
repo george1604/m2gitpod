@@ -15,7 +15,8 @@
             "magento/composer-root-update-plugin": true,
             "magento/composer-dependency-version-audit-plugin": true,
             "magento/inventory-composer-installer": true,
-            "magento/magento-composer-installer": true
+            "magento/magento-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "require": {
@@ -28,6 +29,7 @@
         "magento/module-configurable-sample-data": "100.4.*",
         "magento/module-customer-sample-data": "100.4.*",
         "magento/module-downloadable-sample-data": "100.4.*",
+        "magento/module-elasticsearch-8": "^100.4",
         "magento/module-grouped-product-sample-data": "100.4.*",
         "magento/module-msrp-sample-data": "100.4.*",
         "magento/module-offline-shipping-sample-data": "100.4.*",

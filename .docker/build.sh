@@ -37,16 +37,18 @@ echo "Disable modules & setup config"
 php bin/magento module:disable Magento_Csp Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth
 
 # Magento config
-php bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-log-level=3 --session-save-redis-db=0 --session-save-redis-port=6379;
-php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=1;
-php bin/magento setup:config:set --page-cache=redis --page-cache-redis-server=127.0.0.1 --page-cache-redis-db=2;
+php bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-log-level=3 --session-save-redis-db=0 --session-save-redis-port=6379 -n;
+php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=1 -n;
+php bin/magento setup:config:set --page-cache=redis --page-cache-redis-server=127.0.0.1 --page-cache-redis-db=2 -n;
+php bin/magento config:set catalog/search/engine 'elasticsearch8' -n;
 
 # Setup upgrade
 echo "Setup upgrade"
 php bin/magento setup:upgrade
 
-
-# php bin/magento config:set web/cookie/cookie_path "/" --lock-config
-# php bin/magento config:set web/cookie/cookie_domain ".gitpod.io" --lock-config
+# Reindex & compile
+echo "Reindex & compile"
+php bin/magento indexer:reindex
+php bin/magento setup:di:compile
 
 touch $GITPOD_REPO_ROOT/db-installed.flag
