@@ -52,3 +52,9 @@ php bin/magento indexer:reindex
 php bin/magento setup:di:compile
 
 touch $GITPOD_REPO_ROOT/db-installed.flag
+
+printf "\n\n\n Everything is set up!\n"
+echo "URL: $url"
+echo "Admin URL: "$url"/admin"
+echo "Admin username: admin"
+echo "Admin password: admin123"
