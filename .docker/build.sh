@@ -1,10 +1,17 @@
 #!/bin/bash
 
+if [ -f $GITPOD_REPO_ROOT/db-installed.flag ]; then
+    echo "Magento is already installed!"
+    exit 0
+fi
 
 # Create database
-mysql -u gitpod -p -e 'CREATE DATABASE IF NOT EXISTS magento2;'
-mysql -u gitpod -e 'ALTER USER "root"@"localhost" IDENTIFIED WITH caching_sha2_password BY "zitec123";'
+sudo mysql -u gitpod -p -e 'CREATE DATABASE IF NOT EXISTS magento2;'
+sudo mysql -u root -e 'ALTER USER "root"@"localhost" IDENTIFIED WITH caching_sha2_password BY "zitec123";'
 
+# Import dump
+tar -xvzf database.tar.gz
+mysql -uroot -pzitec123 magento2 < database.sql
 
 # Get URL
 if ! command -v gp &> /dev/null
@@ -40,3 +47,5 @@ php bin/magento setup:upgrade
 
 # php bin/magento config:set web/cookie/cookie_path "/" --lock-config
 # php bin/magento config:set web/cookie/cookie_domain ".gitpod.io" --lock-config
+
+touch $GITPOD_REPO_ROOT/db-installed.flag
