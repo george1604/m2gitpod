@@ -4,7 +4,10 @@ USER root
 ENV TRIGGER_REBUILD=8
 
 # Install supervisor, envsubst
-RUN apt-get update && apt-get install -y supervisor gettext-base && mkdir -p /var/log/supervisor
+RUN apt-get update  \
+    && apt-get install -y supervisor gettext-base  \
+    && mkdir -p /var/log/supervisor  \
+    && sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 
 # Install php-fpm8.2 & nginx
 RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx-mainline'; do add-apt-repository -y "$_ppa"; done \
@@ -30,7 +33,8 @@ RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx-mainline'; do add-apt-reposit
         wget \
         git \
     && mkdir -p /var/run/nginx \
-    && chown -R gitpod:gitpod /etc/nginx /var/run/nginx /var/lib/nginx/ /var/log/nginx/
+    && chown -R gitpod:gitpod /etc/nginx /var/run/nginx /var/lib/nginx/ /var/log/nginx/  \
+    && git config --global core.filemode false
 
 # Disable Opcache
 RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcache.ini.bkp
@@ -38,11 +42,12 @@ RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcac
 # Copy config files for php-fpm & nginx
 COPY .docker/config/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 COPY .docker/config/sp-php-fpm.conf /etc/supervisor/conf.d/sp-php-fpm.conf
+COPY .docker/config/sp-nginx.conf /etc/supervisor/conf.d/sp-nginx.conf
 COPY .docker/config/nginx.conf.template /etc/nginx
 
 
 # Install MySQL
-RUN install-packages mysql-server \
+RUN install-packages mysql-server:8 \
  && mkdir -p /var/run/mysqld /var/log/mysql \
  && chown -R gitpod:gitpod /etc/mysql /var/run/mysqld /var/log/mysql /var/lib/mysql /var/lib/mysql-files /var/lib/mysql-keyring /var/lib/mysql-upgrade
 
@@ -51,9 +56,6 @@ COPY .docker/config/mysql.cnf /etc/mysql/conf.d/mysqld.cnf
 COPY .docker/config/.my.cnf /home/gitpod
 COPY .docker/config/sp-mysql.conf /etc/supervisor/conf.d/mysql.conf
 RUN sudo chown gitpod:gitpod /home/gitpod/.my.cnf
-
-# Install default-login for MySQL clients
-COPY .docker/config/client.cnf /etc/mysql/conf.d/client.cnf
 
 # Install Elasticsearch
 RUN curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.4.0-linux-x86_64.tar.gz --output elasticsearch-8.4.0-linux-x86_64.tar.gz \
