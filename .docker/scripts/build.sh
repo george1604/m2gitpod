@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Eeuo pipefail
+
 if [ -f $GITPOD_REPO_ROOT/db-installed.flag ]; then
     echo "Magento is already installed!"
     exit 0
@@ -31,11 +33,6 @@ php bin/magento setup:install --db-name='magento2' --db-user='root' --db-passwor
 
 git checkout -- .gitignore
 
-
-# Disable CSP & 2FA modules
-echo "Disable modules & setup config"
-php bin/magento module:disable Magento_Csp Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth
-
 # Magento config
 php bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-log-level=3 --session-save-redis-db=0 --session-save-redis-port=6379 -n;
 php bin/magento setup:config:set --cache-backend=redis --cache-backend-redis-server=127.0.0.1 --cache-backend-redis-db=1 -n;
@@ -48,12 +45,12 @@ php bin/magento setup:upgrade
 
 # Reindex & compile
 echo "Reindex & compile"
-php bin/magento indexer:reindex
 php bin/magento setup:di:compile
+php bin/magento indexer:reindex
 
 touch $GITPOD_REPO_ROOT/db-installed.flag
 
-printf "\n\n\n Everything is set up!\n"
+printf "\n\n\nEverything is set up!\n"
 echo "URL: $url"
 echo "Admin URL: "$url"/admin"
 echo "Admin username: admin"

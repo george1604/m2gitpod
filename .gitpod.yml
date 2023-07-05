@@ -5,10 +5,11 @@ ports:
   visibility: public
 vscode:
   extensions:
-    - formulahendry.vscode-mysql@0.4.1
+    - mtxr.sqltools@0.28.0
+    - mtxr.sqltools-driver-mysql@0.6.0
 tasks:
   - name: "Run services and install Magento"
     openMode: tab-after
-    init: ./.docker/init.sh
-    command: ./.docker/services.sh;
-             ./.docker/build.sh;
+    init: ./.docker/scripts/init.sh
+    command: ./.docker/scripts/services.sh;
+             ./.docker/scripts/build.sh;

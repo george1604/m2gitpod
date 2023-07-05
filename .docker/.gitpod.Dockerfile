@@ -33,8 +33,7 @@ RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx-mainline'; do add-apt-reposit
         wget \
         git \
     && mkdir -p /var/run/nginx \
-    && chown -R gitpod:gitpod /etc/nginx /var/run/nginx /var/lib/nginx/ /var/log/nginx/  \
-    && git config --global core.filemode false
+    && chown -R gitpod:gitpod /etc/nginx /var/run/nginx /var/lib/nginx/ /var/log/nginx/
 
 # Disable Opcache
 RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcache.ini.bkp
@@ -86,3 +85,6 @@ RUN sudo chown -R gitpod:gitpod /etc/php \
 RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
 
 USER gitpod
+
+# Additional git config
+RUN git config --global core.filemode false

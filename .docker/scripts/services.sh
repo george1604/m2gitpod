@@ -11,7 +11,9 @@ sudo sed -i 's#/var/lib/mysql#'$GITPOD_REPO_ROOT'/mysql#g' /etc/supervisor/conf.
 sudo /etc/init.d/supervisor start &
 
 # Wait for MySQL to be ready
-gp ports await 3306;
-
-# Install the application
-./.docker/build.sh
+if ! command -v gp &> /dev/null
+then
+    sleep 20;
+else
+    gp ports await 3306;
+fi
