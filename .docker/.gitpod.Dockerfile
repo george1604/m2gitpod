@@ -47,7 +47,7 @@ COPY .docker/config/nginx.conf.template /etc/nginx
 
 
 # Install MySQL
-RUN install-packages mysql-server:8 \
+RUN install-packages mysql-server-8.0 \
  && mkdir -p /var/run/mysqld /var/log/mysql \
  && chown -R gitpod:gitpod /etc/mysql /var/run/mysqld /var/log/mysql /var/lib/mysql /var/lib/mysql-files /var/lib/mysql-keyring /var/lib/mysql-upgrade
 
