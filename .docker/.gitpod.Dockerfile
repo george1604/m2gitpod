@@ -1,7 +1,7 @@
 FROM gitpod/workspace-base:2023-05-09-03-02-39
 
 USER root
-ENV TRIGGER_REBUILD=8
+ENV TRIGGER_REBUILD=1
 
 # Install supervisor, envsubst
 RUN apt-get update  \
