@@ -32,6 +32,7 @@ echo "Install Magento"
 php bin/magento setup:install --db-name='magento2' --db-user='root' --db-password='zitec123' --base-url=$url --backend-frontname='admin' --admin-user='admin' --admin-password='admin123' --admin-email='test@zitec.com' --admin-firstname='Admin' --admin-lastname='User' --use-rewrites='1' --use-secure='1' --base-url-secure=$url --use-secure-admin='1' --language='en_US' --db-host='127.0.0.1' --timezone='Europe/Bucharest' --currency='RON' --session-save='redis'
 
 git checkout -- .gitignore
+git config --global core.filemode false
 
 # Magento config
 php bin/magento setup:config:set --session-save=redis --session-save-redis-host=127.0.0.1 --session-save-redis-log-level=3 --session-save-redis-db=0 --session-save-redis-port=6379 -n;

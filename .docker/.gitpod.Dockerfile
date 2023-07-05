@@ -85,6 +85,3 @@ RUN sudo chown -R gitpod:gitpod /etc/php \
 RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
 
 USER gitpod
-
-# Additional git config
-RUN git config --global core.filemode false
