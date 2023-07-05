@@ -89,7 +89,7 @@ return [
         'Magento_CatalogSampleData' => 1,
         'Magento_CatalogCustomerGraphQl' => 1,
         'Magento_Elasticsearch' => 1,
-        'Magento_Elasticsearch7' => 1,
+        'Magento_Elasticsearch8' => 1,
         'Magento_Email' => 1,
         'Magento_EncryptionKey' => 1,
         'Magento_Fedex' => 1,
