@@ -29,14 +29,24 @@ RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx-mainline'; do add-apt-reposit
         php8.2-tokenizer \
         php8.2-xml \
         php8.2-zip \
+        php8.2-xdebug \
         unzip \
         wget \
         git \
     && mkdir -p /var/run/nginx \
     && chown -R gitpod:gitpod /etc/nginx /var/run/nginx /var/lib/nginx/ /var/log/nginx/
 
-# Disable Opcache
-RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcache.ini.bkp
+# Set PHP 8.2 as default
+RUN update-alternatives --set php /usr/bin/php8.2 \
+    && update-alternatives --set phar /usr/bin/phar8.2 \
+    && update-alternatives --set phar.phar /usr/bin/phar.phar8.2
+
+# Copy Xdebug ini
+COPY .docker/config/xdebug.ini /etc/php/8.2/mods-available/xdebug.ini
+
+# Disable Opcache & Xdebug
+RUN mv /etc/php/8.2/mods-available/opcache.ini /etc/php/8.2/mods-available/opcache.ini.bkp \
+    && mv /etc/php/8.2/mods-available/xdebug.ini /etc/php/8.2/mods-available/xdebug.ini.bkp
 
 # Copy config files for php-fpm & nginx
 COPY .docker/config/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
@@ -52,9 +62,7 @@ RUN install-packages mysql-server-8.0 \
 
 # Copy our own MySQL config
 COPY .docker/config/mysql.cnf /etc/mysql/conf.d/mysqld.cnf
-COPY .docker/config/.my.cnf /home/gitpod
 COPY .docker/config/sp-mysql.conf /etc/supervisor/conf.d/mysql.conf
-RUN sudo chown gitpod:gitpod /home/gitpod/.my.cnf
 
 # Install Elasticsearch
 RUN curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.4.0-linux-x86_64.tar.gz --output elasticsearch-8.4.0-linux-x86_64.tar.gz \
@@ -85,3 +93,10 @@ RUN sudo chown -R gitpod:gitpod /etc/php \
 RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
 
 USER gitpod
+
+# Composer install
+WORKDIR /home/gitpod/magento
+COPY composer.json composer.lock ./
+RUN composer config -g -a http-basic.repo.magento.com 64229a8ef905329a184da4f174597d25 a0df0bec06011c7f1e8ea8833ca7661e \
+    && composer install --no-interaction --optimize-autoloader --ignore-platform-reqs \
+    && composer dumpautoload

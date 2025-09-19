@@ -1,18 +1,8 @@
 {
-  "sqltools.connections": [
-    {
-      "mysqlOptions": {
-        "authProtocol": "xprotocol"
-      },
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 33060,
-      "driver": "MySQL",
-      "name": "local_db",
-      "database": "magento2",
-      "username": "root",
-      "password": "zitec123",
-      "connectionTimeout": 15
-    }
-  ]
+  "workbench.startupEditor": "none",
+  "workbench.editorAssociations": {
+    "README.md": "vscode.markdown.preview.editor"
+  },
+  "extensions.ignoreRecommendations": true,
+  "extensions.showRecommendationsOnlyOnDemand": true
 }

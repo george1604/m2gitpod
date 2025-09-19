@@ -2,14 +2,21 @@ image:
   file: .docker/.gitpod.Dockerfile
 ports:
 - port: 8002
-  visibility: public
+  visibility: private
 vscode:
   extensions:
-    - mtxr.sqltools@0.28.0
-    - mtxr.sqltools-driver-mysql@0.6.0
+    - cweijan.vscode-mysql-client2
+    - mehedidracula.php-namespace-resolver
+    - felixfbecker.php-debug
+    - pbogut.magento2-ls
+    - neilbrayfield.php-docblocker
 tasks:
+  - init: gp sync-await vendor
+    command: php bin/setup-vscode-extensions
   - name: "Run services and install Magento"
     openMode: tab-after
-    init: ./.docker/scripts/init.sh
+    init: ./.docker/scripts/init.sh && gp sync-done vendor
     command: ./.docker/scripts/services.sh;
              ./.docker/scripts/build.sh;
+             gp open README.md;
+             gp preview $(gp url 8002);
