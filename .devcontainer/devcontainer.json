@@ -1,0 +1,34 @@
+{
+  "name": "m2gitpod",
+  "build": {
+    "context": "..",
+    "dockerfile": "../.docker/.gitpod.Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "remoteUser": "gitpod",
+  "containerUser": "gitpod",
+  "workspaceFolder": "/workspaces/m2gitpod",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/m2gitpod,type=bind",
+  "forwardPorts": [
+    8002
+  ],
+  "portsAttributes": {
+    "8002": {
+      "label": "Port 8002",
+      "elevateIfNeeded": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "cweijan.vscode-mysql-client2",
+        "mehedidracula.php-namespace-resolver",
+        "felixfbecker.php-debug",
+        "pbogut.magento2-ls",
+        "neilbrayfield.php-docblocker"
+      ]
+    }
+  }
+}

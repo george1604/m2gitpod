@@ -1,0 +1,25 @@
+tasks:
+    command-0:
+        command: php bin/setup-vscode-extensions
+        dependsOn:
+            - init-000
+        description: init task migrated from .gitpod.yml
+        name: 'Task 0: command'
+        triggeredBy:
+            - postDevcontainerStart
+    command-1:
+        command: ./.docker/scripts/services.sh; ./.docker/scripts/build.sh; gp open README.md; gp preview $(gp url 8002);
+        dependsOn:
+            - init-001
+        description: init task migrated from .gitpod.yml
+        name: 'Run services and install Magento: command'
+        triggeredBy:
+            - postDevcontainerStart
+    init-000:
+        command: gp sync-await vendor
+        description: init task migrated from .gitpod.yml
+        name: 'Task 0: init'
+    init-001:
+        command: ./.docker/scripts/init.sh && gp sync-done vendor
+        description: init task migrated from .gitpod.yml
+        name: 'Run services and install Magento: init'

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Move mysql data folder to workspace
-sudo mv /var/lib/mysql $GITPOD_REPO_ROOT/;
+sudo mv /var/lib/mysql /workspaces/m2gitpod/;
 
 # Move vendor to workspace
-mv /home/gitpod/magento/vendor $GITPOD_REPO_ROOT/;
+mv /home/gitpod/magento/vendor /workspaces/m2gitpod/vendor;
 
 # Copy sample data media files to workspace
-cp -r /home/gitpod/magento/pub/media/* $GITPOD_REPO_ROOT/pub/media/
+cp -r /home/gitpod/magento/pub/media/* /workspaces/m2gitpod/pub/media/

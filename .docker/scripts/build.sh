@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-if [ -f $GITPOD_REPO_ROOT/db-installed.flag ]; then
+if [ -f /workspaces/m2gitpod/db-installed.flag ]; then
     echo "Magento is already installed! Run only ES reindex & clean cache."
     gp ports await 9200 && php bin/magento indexer:reindex catalogsearch_fulltext && php bin/magento c:c block_html full_page
     exit 0
@@ -50,12 +50,12 @@ echo "Reindex & compile"
 php bin/magento setup:di:compile
 php bin/magento indexer:reindex
 
-touch $GITPOD_REPO_ROOT/db-installed.flag
+touch /workspaces/m2gitpod/db-installed.flag
 
-echo "URL: $url" > $GITPOD_REPO_ROOT/env.txt
-echo "Admin URL: "$url"admin" >> $GITPOD_REPO_ROOT/env.txt
-echo "Admin username: admin" >> $GITPOD_REPO_ROOT/env.txt
-echo "Admin password: admin123" >> $GITPOD_REPO_ROOT/env.txt
+echo "URL: $url" > /workspaces/m2gitpod/env.txt
+echo "Admin URL: "$url"admin" >> /workspaces/m2gitpod/env.txt
+echo "Admin username: admin" >> /workspaces/m2gitpod/env.txt
+echo "Admin password: admin123" >> /workspaces/m2gitpod/env.txt
 
 printf "\n\n\nEverything is set up!\n"
-cat $GITPOD_REPO_ROOT/env.txt
+cat /workspaces/m2gitpod/env.txt

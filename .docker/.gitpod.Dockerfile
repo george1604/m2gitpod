@@ -10,7 +10,7 @@ RUN apt-get update  \
     && sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 
 # Install php-fpm8.2 & nginx
-RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx-mainline'; do add-apt-repository -y "$_ppa"; done \
+RUN for _ppa in 'ppa:ondrej/php' 'ppa:ondrej/nginx'; do add-apt-repository -y "$_ppa"; done \
     && install-packages \
         composer \
         nginx \
@@ -95,7 +95,7 @@ RUN sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh
 USER gitpod
 
 # Composer install
-WORKDIR /home/gitpod/magento
+WORKDIR /home/gitpod
 COPY composer.json composer.lock ./
 RUN composer config -g -a http-basic.repo.magento.com 64229a8ef905329a184da4f174597d25 a0df0bec06011c7f1e8ea8833ca7661e \
     && composer install --no-interaction --optimize-autoloader --ignore-platform-reqs \
