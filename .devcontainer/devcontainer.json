@@ -1,22 +1,21 @@
 {
-  "name": "m2gitpod",
+  "name": "zitec-php-coding-assessment",
   "build": {
     "context": "..",
-    "dockerfile": "../.docker/.gitpod.Dockerfile"
+    "dockerfile": "Dockerfile"
   },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "remoteUser": "gitpod",
-  "containerUser": "gitpod",
-  "workspaceFolder": "/workspaces/m2gitpod",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/m2gitpod,type=bind",
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
   "forwardPorts": [
-    8002
+    8080
   ],
   "portsAttributes": {
-    "8002": {
-      "label": "Port 8002",
+    "8080": {
+      "label": "Web Server",
+      "onAutoForward": "openPreview",
       "elevateIfNeeded": true
     }
   },
